@@ -502,7 +502,7 @@ var module_saturn = {
         "hide": "info"
       }], [{
         "id": "3",
-        "action": "Saturn in Gemini)",
+        "action": "Saturn in Gemini",
         "tags": "saturn gemini air mercury",
         "hide": "info"
       }], [{
@@ -790,147 +790,147 @@ var module_aspects = {
       [
         {
           "id": 22,
-          "action": "Moon &#9914; Mercury",
+          "action": "Moon &#9913; Mercury",
           "tags": "moon sextile mercury"
         }
       ],
       [
         {
           "id": 23,
-          "action": "Moon &#9914; Venus",
+          "action": "Moon &#9913; Venus",
           "tags": "moon sextile venus"
         }
       ],
       [
         {
           "id": 24,
-          "action": "Moon &#9914; Sun",
+          "action": "Moon &#9913; Sun",
           "tags": "moon sextile sun"
         }
       ],
       [
         {
           "id": 25,
-          "action": "Moon &#9914; Mars",
+          "action": "Moon &#9913; Mars",
           "tags": "moon sextile mars"
         }
       ],
       [
         {
           "id": 26,
-          "action": "Moon &#9914; Jupiter",
+          "action": "Moon &#9913; Jupiter",
           "tags": "moon sextile jupiter"
         }
       ],
       [
         {
           "id": 27,
-          "action": "Moon &#9914; Saturn",
+          "action": "Moon &#9913; Saturn",
           "tags": "moon sextile saturn"
         }
       ],
       [
         {
           "id": 28,
-          "action": "Mercury &#9914; Venus",
+          "action": "Mercury &#9913; Venus",
           "tags": "mercury sextile venus"
         }
       ],
       [
         {
           "id": 29,
-          "action": "Mercury &#9914; Sun",
+          "action": "Mercury &#9913; Sun",
           "tags": "mercury sextile sun"
         }
       ],
       [
         {
           "id": 30,
-          "action": "Mercury &#9914; Mars",
+          "action": "Mercury &#9913; Mars",
           "tags": "mercury sextile mars"
         }
       ],
       [
         {
           "id": 31,
-          "action": "Mercury &#9914; Jupiter",
+          "action": "Mercury &#9913; Jupiter",
           "tags": "mercury sextile jupiter"
         }
       ],
       [
         {
           "id": 32,
-          "action": "Mercury &#9914; Saturn",
+          "action": "Mercury &#9913; Saturn",
           "tags": "mercury sextile saturn"
         }
       ],
       [
         {
           "id": 33,
-          "action": "Venus &#9914; Sun",
+          "action": "Venus &#9913; Sun",
           "tags": "venus sextile sun"
         }
       ],
       [
         {
           "id": 34,
-          "action": "Venus &#9914; Mars",
+          "action": "Venus &#9913; Mars",
           "tags": "venus sextile mars"
         }
       ],
       [
         {
           "id": 35,
-          "action": "Venus &#9914; Jupiter",
+          "action": "Venus &#9913; Jupiter",
           "tags": "venus sextile jupiter"
         }
       ],
       [
         {
           "id": 36,
-          "action": "Venus &#9914; Saturn",
+          "action": "Venus &#9913; Saturn",
           "tags": "venus sextile saturn"
         }
       ],
       [
         {
           "id": 37,
-          "action": "Sun &#9914; Mars",
+          "action": "Sun &#9913; Mars",
           "tags": "sun sextile mars"
         }
       ],
       [
         {
           "id": 38,
-          "action": "Sun &#9914; Jupiter",
+          "action": "Sun &#9913; Jupiter",
           "tags": "sun sextile jupiter"
         }
       ],
       [
         {
           "id": 39,
-          "action": "Sun &#9914; Saturn",
+          "action": "Sun &#9913; Saturn",
           "tags": "sun sextile saturn"
         }
       ],
       [
         {
           "id": 40,
-          "action": "Mars &#9914; Jupiter",
+          "action": "Mars &#9913; Jupiter",
           "tags": "mars sextile jupiter"
         }
       ],
       [
         {
           "id": 41,
-          "action": "Mars &#9914; Saturn",
+          "action": "Mars &#9913; Saturn",
           "tags": "mars sextile saturn"
         }
       ],
       [
         {
           "id": 42,
-          "action": "Jupiter &#9914; Saturn",
+          "action": "Jupiter &#9913; Saturn",
           "tags": "jupiter sextile saturn"
         }
       ],

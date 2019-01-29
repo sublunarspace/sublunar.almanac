@@ -111,11 +111,12 @@ SL.App = (function() {
                             }
                             if ( response.hasOwnProperty("files") ) {
                                 var url = "http://release.sublunar.space/presets/";
-                                $('#caption .stoke').html('downloaded preset file <span>0</span> of 4');
+                                $('#caption .stoke').html('downloaded preset file <span>0</span> of 5');
                                 downloadPreset(file, url+response.files.file1, "modals.html", response);
                                 downloadPreset(file, url+response.files.file2, "filtermenu.html", response);
                                 downloadPreset(file, url+response.files.file3, "grid.html", response);
                                 downloadPreset(file, url+response.files.file4, "ephemeris.json", response);
+                                downloadPreset(file, url+response.files.file5, "setup.json", response);
                             } else {
                                 writeHash(file, response);
                             }
@@ -210,6 +211,15 @@ SL.App = (function() {
             if (err) throw err;
             var json = JSON.parse(data);
             SL.Calendar.load(json.query);
+        });
+        fs.readFile(path.normalize(nw.App.dataPath+"/presets/setup.json"), "utf8", function(err, data) {
+            if (err) throw err;
+            var json = JSON.parse(data);
+            $("#search").val(json.place.name);
+            $("#lat").val(json.place.lat);
+            $("#lon").val(json.place.lon);
+            $("#offset").val(json.place.offset);
+            $('#zodiac').prop('checked', json.sidereal);
         });
         if ( $('#calendar').data('isotope') ) $('#calendar').isotope('destroy');
     }
