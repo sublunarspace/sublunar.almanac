@@ -301,13 +301,13 @@ SL.Calendar = (function() {
       $('#p-info').html(
         $('#hourinfos').append(
           '<li>&nbsp;</li>\n'+
-          '<li>Lunar Day: '+(mom.lunar.day+1)+'</li>\n'+
+          '<li>Lunar Day: '+(mom.lunar.day)+'</li>\n'+
           '<li>'+SL.Astro.Nomy.moon.phase.symbol[SL.Astro.Nomy.moonPhase(mom.lunar)]+' '+SL.Astro.Nomy.moon.phase.name[SL.Astro.Nomy.moonPhase(mom.lunar)]+'</li>\n'+
           '<li>Phase: '+Math.round(mom.lunar.phase * 100)+'%</li>\n'+
           '<li>Angle: '+Math.round(mom.lunar.angle * 100) / 100+'°</li>\n'+
           '<li>&nbsp;</li>\n'
       ));
-      var chaldean = ["Moon", "Mercury", "Venus", "Sun", "Mars", "Jupiter", "Saturn"];
+      var chaldean = ["ASC", "Moon", "Mercury", "Venus", "Sun", "Mars", "Jupiter", "Saturn"];
       chaldean.forEach(function(planet) {
         $('#hourinfos').append(
           '<li><b>'+planet+'</b></li>\n'+
