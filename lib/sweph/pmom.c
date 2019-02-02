@@ -344,8 +344,13 @@ const char * pmom(int days, long epoch, double latitude, double longitude, int b
 
         h++;
       }
-      queryday = hm;
+      queryday += 86400;
       j++;
+#if USECASE == OFFLINE
+      EM_ASM_({
+          NProgress.set($0/$1);
+      }, j, days*2);
+#endif
     };
     length += snprintf(Buffer+length, buflen-length, "]}");
     return Buffer;
