@@ -339,6 +339,7 @@ const char * pmom(int days, long epoch, double latitude, double longitude, int b
 
         //length += snprintf(Buffer+length, buflen-length, "%d setyes %d risetod %d settod %d risetom %d nhly %d dhlt %d nhlt %d pday %d\n", hm, solar[0], solar[1], solar[2], solar[3], solar[4], solar[5], solar[6], solar[7]);
 
+
         if(j == days && h == 23) length += snprintf(Buffer+length, buflen-length, "");
         else length += snprintf(Buffer+length, buflen-length, ", ");
 
