@@ -4,7 +4,7 @@
  *
  * SUBLUNAR ALMANAC
  */
- 
+
 var SL = SL || {};
 
 /**
@@ -78,7 +78,7 @@ SL.Astro = (function() {
       name : [ "void", "Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn" ],
       ruler : {
         greek : [ "void", "Helios", "Selene", "Ares", "Hermes", "Zeus", "Aphrodite", "Kronos" ],
-      roman: [ "void", "Sol", "Luna", "Mars", "Mercury", "Jupiter", "Venus", "Saturn" ]
+        roman: [ "void", "Sol", "Luna", "Mars", "Mercury", "Jupiter", "Venus", "Saturn" ]
     },
       symbol : [ "void", "☉", "☽", "♂", "☿", "♃", "♀", "♄" ],
       day : [ "void", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ],
@@ -91,7 +91,8 @@ SL.Astro = (function() {
     var zodiac = {
       name : [ "void", "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces" ],
       symbol : [ "void", "♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓" ],
-      ruler : [ 0, 3, 6, 4, 2, 1, 4, 6, 3, 5, 7, 7, 5 ]
+      ruler : [ 0, 3, 6, 4, 2, 1, 4, 6, 3, 5, 7, 7, 5 ],
+      exaltation : [ 0, 1, 2, 0, 5, 0, 4, 7, 0, 0, 3, 0, 6 ]
     }
 
     /**
