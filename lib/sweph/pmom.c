@@ -177,10 +177,15 @@ int * planetary_moment(double lat, double lon, long unixtime, double *lunar, dou
       planets[pl+7] = x2[3];
     }
 
+    // calculate geocentric ecliptic longitude for mean node
+    iflgret = swe_calc(te, SE_MEAN_NODE, iflag, x2, serr);
+    planets[17] = x2[0];
+
     // calculate house cusps, ascendant and mc
     swe_houses_ex(tjd_ts, 0, latitude, longitude, 'P', data, datb);
     planets[14] = datb[0]; // asc
     planets[15] = datb[1]; // mc
+    planets[16] = datb[2]; // armc
 
     // calculate moon phase
     return_code = swe_pheno(te, SE_MOON, iflag, &moon, serr);
@@ -296,7 +301,7 @@ const char * pmom(int days, long epoch, double latitude, double longitude, int b
     int32         year, month, day, hour, minute, second, j, h, m, interval, start, hm, time[6];
     double        hours;
     long          solar[9] = {0};
-    double        lunar[3] = {0.0}, planet[16] = {0.0};
+    double        lunar[3] = {0.0}, planet[18] = {0.0};
     char*         Buffer = malloc(buflen);
     int           length = 0;
 
@@ -335,7 +340,7 @@ const char * pmom(int days, long epoch, double latitude, double longitude, int b
 
         planetary_moment(latitude, longitude, hm, lunar, planet);
 
-        length += snprintf(Buffer+length, buflen-length, "{ \"ts\": %d, \"lunar\": { \"day\": %d, \"angle\": %f, \"phase\": %f }, \"planetary\": { \"day\": { \"no\": %d, \"start\": %d, \"end\": %d }, \"night\": { \"start\": %d, \"end\": %d }, \"hour\": { \"no\": %d, \"start\": %d, \"end\": %d, \"length\": { \"day\": %d, \"night\": %d } } }, \"ephemeris\": { \"sun\": { \"deg\": %f, \"speed\": %f }, \"moon\": { \"deg\": %f, \"speed\": %f }, \"mercury\": { \"deg\": %f, \"speed\": %f }, \"venus\": { \"deg\": %f, \"speed\": %f }, \"mars\": { \"deg\": %f, \"speed\": %f }, \"jupiter\": { \"deg\": %f, \"speed\": %f }, \"saturn\": { \"deg\": %f, \"speed\": %f }, \"asc\": { \"deg\": %f }, \"mc\": { \"deg\": %f } } }", hm, (int) lunar[0], lunar[1], lunar[2], solar[7], solar[1], solar[2]-1, solar[2], solar[3]-1, h, hm, hm+interval-1, solar[5], solar[6], planet[0], planet[7], planet[1], planet[8], planet[2], planet[9], planet[3], planet[10], planet[4], planet[11], planet[5], planet[12], planet[6], planet[13], planet[14], planet[15] );
+        length += snprintf(Buffer+length, buflen-length, "{ \"ts\": %d, \"gst\": %f, \"lunar\": { \"day\": %d, \"angle\": %f, \"phase\": %f }, \"planetary\": { \"day\": { \"no\": %d, \"start\": %d, \"end\": %d }, \"night\": { \"start\": %d, \"end\": %d }, \"hour\": { \"no\": %d, \"start\": %d, \"end\": %d, \"length\": { \"day\": %d, \"night\": %d } } }, \"ephemeris\": { \"sun\": { \"deg\": %f, \"speed\": %f }, \"moon\": { \"deg\": %f, \"speed\": %f }, \"mercury\": { \"deg\": %f, \"speed\": %f }, \"venus\": { \"deg\": %f, \"speed\": %f }, \"mars\": { \"deg\": %f, \"speed\": %f }, \"jupiter\": { \"deg\": %f, \"speed\": %f }, \"saturn\": { \"deg\": %f, \"speed\": %f }, \"node\": { \"deg\": %f }, \"asc\": { \"deg\": %f }, \"mc\": { \"deg\": %f } } }", hm, (planet[16] / 15.0), (int) lunar[0], lunar[1], lunar[2], solar[7], solar[1], solar[2]-1, solar[2], solar[3]-1, h, hm, hm+interval-1, solar[5], solar[6], planet[0], planet[7], planet[1], planet[8], planet[2], planet[9], planet[3], planet[10], planet[4], planet[11], planet[5], planet[12], planet[6], planet[13], planet[16], planet[14], planet[15] );
 
         //length += snprintf(Buffer+length, buflen-length, "%d setyes %d risetod %d settod %d risetom %d nhly %d dhlt %d nhlt %d pday %d\n", hm, solar[0], solar[1], solar[2], solar[3], solar[4], solar[5], solar[6], solar[7]);
 
