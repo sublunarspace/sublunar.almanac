@@ -317,46 +317,72 @@ const char * pmom(int days, long epoch, double latitude, double longitude, int b
     second = tmp->tm_sec;
     hours = (double) hour + (double) minute / 60 + (double) second / 3600;
 
-    // start of Almanac
-    queryday = time_to_epoch(year, month, day, 0, 0, 0);
-    j = 0;
-    length += snprintf(Buffer+length, buflen-length, "{ \"query\":[");
+    length += snprintf(Buffer+length, buflen-length, "{ ");
 
-    // calculate all hours for all days
-    while ( j <= days ) {
-      solar_moment(latitude, longitude, queryday, solar);
-      h = interval = start = m = 0;
-      while ( h < 24 ) {
-        if ( h < 12 ) {
-          interval = solar[5];
-          start = solar[1];
-          m = h;
-        } else {
-          interval = solar[6];
-          start = solar[2];
-          m = h - 12;
-        }
-        hm = start + m * interval;
-
-        planetary_moment(latitude, longitude, hm, lunar, planet);
-
-        length += snprintf(Buffer+length, buflen-length, "{ \"ts\": %d, \"gst\": %f, \"lunar\": { \"day\": %d, \"angle\": %f, \"phase\": %f }, \"planetary\": { \"day\": { \"no\": %d, \"start\": %d, \"end\": %d }, \"night\": { \"start\": %d, \"end\": %d }, \"hour\": { \"no\": %d, \"start\": %d, \"end\": %d, \"length\": { \"day\": %d, \"night\": %d } } }, \"ephemeris\": { \"sun\": { \"deg\": %f, \"speed\": %f }, \"moon\": { \"deg\": %f, \"speed\": %f }, \"mercury\": { \"deg\": %f, \"speed\": %f }, \"venus\": { \"deg\": %f, \"speed\": %f }, \"mars\": { \"deg\": %f, \"speed\": %f }, \"jupiter\": { \"deg\": %f, \"speed\": %f }, \"saturn\": { \"deg\": %f, \"speed\": %f }, \"node\": { \"deg\": %f }, \"asc\": { \"deg\": %f }, \"mc\": { \"deg\": %f } } }", hm, (planet[16] / 15.0), (int) lunar[0], lunar[1], lunar[2], solar[7], solar[1], solar[2]-1, solar[2], solar[3]-1, h, hm, hm+interval-1, solar[5], solar[6], planet[0], planet[7], planet[1], planet[8], planet[2], planet[9], planet[3], planet[10], planet[4], planet[11], planet[5], planet[12], planet[6], planet[13], planet[16], planet[14], planet[15] );
-
-        //length += snprintf(Buffer+length, buflen-length, "%d setyes %d risetod %d settod %d risetom %d nhly %d dhlt %d nhlt %d pday %d\n", hm, solar[0], solar[1], solar[2], solar[3], solar[4], solar[5], solar[6], solar[7]);
-
-        if(j == days && h == 23) length += snprintf(Buffer+length, buflen-length, "");
-        else length += snprintf(Buffer+length, buflen-length, ", ");
-
-        h++;
+    // calculate timestamp moment
+    solar_moment(latitude, longitude, epoch, solar);
+    planetary_moment(latitude, longitude, epoch, lunar, planet);
+    if ( epoch < solar[2]) {
+      start = solar[1];
+      interval = solar[5];
+      m = 0;
+    }
+    if ( solar[2] < epoch ) {
+      start = solar[2];
+      interval = solar[6];
+      m = 12;
+    }
+    for (hm = 1; hm <= 12; hm++) {
+      if (epoch < (start + hm * interval) ) {
+        hm = hm + m;
+        break;
       }
-      queryday += 86400;
-      j++;
-#if USECASE == OFFLINE
-      EM_ASM_({
-          NProgress.set($0/$1);
-      }, j, days*2);
-#endif
-    };
+    }
+    length += snprintf(Buffer+length, buflen-length, "\"moment\":[{ \"ts\": %d, \"gst\": %f, \"lunar\": { \"day\": %d, \"angle\": %f, \"phase\": %f }, \"planetary\": { \"day\": { \"no\": %d, \"start\": %d, \"end\": %d }, \"night\": { \"start\": %d, \"end\": %d }, \"hour\": { \"no\": %d, \"start\": %d, \"end\": %d, \"length\": { \"day\": %d, \"night\": %d } } }, \"ephemeris\": { \"sun\": { \"deg\": %f, \"speed\": %f }, \"moon\": { \"deg\": %f, \"speed\": %f }, \"mercury\": { \"deg\": %f, \"speed\": %f }, \"venus\": { \"deg\": %f, \"speed\": %f }, \"mars\": { \"deg\": %f, \"speed\": %f }, \"jupiter\": { \"deg\": %f, \"speed\": %f }, \"saturn\": { \"deg\": %f, \"speed\": %f }, \"node\": { \"deg\": %f }, \"asc\": { \"deg\": %f }, \"mc\": { \"deg\": %f } } }], ", epoch, (planet[16] / 15.0), (int) lunar[0], lunar[1], lunar[2], solar[7], solar[1], solar[2]-1, solar[2], solar[3]-1, hm, (start + hm * interval), (start + hm * interval)+interval-1, solar[5], solar[6], planet[0], planet[7], planet[1], planet[8], planet[2], planet[9], planet[3], planet[10], planet[4], planet[11], planet[5], planet[12], planet[6], planet[13], planet[16], planet[14], planet[15] );
+
+    if ( days > 0 ) {
+
+      // start of Almanac
+      queryday = time_to_epoch(year, month, day, 0, 0, 0);
+      j = 0;
+      length += snprintf(Buffer+length, buflen-length, "\"query\":[");
+
+      // calculate all hours for all days
+      while ( j <= days ) {
+        solar_moment(latitude, longitude, queryday, solar);
+        h = interval = start = m = 0;
+        while ( h < 24 ) {
+          if ( h < 12 ) {
+            interval = solar[5];
+            start = solar[1];
+            m = h;
+          } else {
+            interval = solar[6];
+            start = solar[2];
+            m = h - 12;
+          }
+          hm = start + m * interval;
+
+          planetary_moment(latitude, longitude, hm, lunar, planet);
+
+          length += snprintf(Buffer+length, buflen-length, "{ \"ts\": %d, \"gst\": %f, \"lunar\": { \"day\": %d, \"angle\": %f, \"phase\": %f }, \"planetary\": { \"day\": { \"no\": %d, \"start\": %d, \"end\": %d }, \"night\": { \"start\": %d, \"end\": %d }, \"hour\": { \"no\": %d, \"start\": %d, \"end\": %d, \"length\": { \"day\": %d, \"night\": %d } } }, \"ephemeris\": { \"sun\": { \"deg\": %f, \"speed\": %f }, \"moon\": { \"deg\": %f, \"speed\": %f }, \"mercury\": { \"deg\": %f, \"speed\": %f }, \"venus\": { \"deg\": %f, \"speed\": %f }, \"mars\": { \"deg\": %f, \"speed\": %f }, \"jupiter\": { \"deg\": %f, \"speed\": %f }, \"saturn\": { \"deg\": %f, \"speed\": %f }, \"node\": { \"deg\": %f }, \"asc\": { \"deg\": %f }, \"mc\": { \"deg\": %f } } }", hm, (planet[16] / 15.0), (int) lunar[0], lunar[1], lunar[2], solar[7], solar[1], solar[2]-1, solar[2], solar[3]-1, h, hm, hm+interval-1, solar[5], solar[6], planet[0], planet[7], planet[1], planet[8], planet[2], planet[9], planet[3], planet[10], planet[4], planet[11], planet[5], planet[12], planet[6], planet[13], planet[16], planet[14], planet[15] );
+
+          //length += snprintf(Buffer+length, buflen-length, "%d setyes %d risetod %d settod %d risetom %d nhly %d dhlt %d nhlt %d pday %d\n", hm, solar[0], solar[1], solar[2], solar[3], solar[4], solar[5], solar[6], solar[7]);
+
+          if(j == days && h == 23) length += snprintf(Buffer+length, buflen-length, "");
+          else length += snprintf(Buffer+length, buflen-length, ", ");
+
+          h++;
+        }
+        queryday += 86400;
+        j++;
+  #if USECASE == OFFLINE
+        EM_ASM_({
+            NProgress.set($0/$1);
+        }, j, days*2);
+  #endif
+      };
+    }
     length += snprintf(Buffer+length, buflen-length, "]}");
     return Buffer;
 }
@@ -388,7 +414,7 @@ int main(int argc,char* argv[]) // days, timestamp, latitude, longitude
     }
 
     timestamp = epoch;
-    buflen = days * 100000;
+    buflen = (1 + days) * 100000;
     printf(pmom( days, epoch, latitude, longitude, buflen));
 
 }
@@ -402,7 +428,7 @@ const char * get(int days, long epoch, double latitude, double longitude) // day
     int32         buflen;
 
     timestamp = epoch;
-    buflen = days * 100000;
+    buflen = (1 + days) * 100000;
     return pmom( days, epoch, latitude, longitude, buflen);
 }
 #endif

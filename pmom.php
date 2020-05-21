@@ -12,7 +12,7 @@ $lon = $_GET['lon'];
 $lat = $_GET['lat'];
 $days = $_GET['days'];
 
-exec ("lib/sweph/pmom $days $ts $lat $lon", $output);
+exec ("lib/sweph/pmom $days $ts $lat $lon $moment", $output);
 
 echo $output[0];
 ?>
