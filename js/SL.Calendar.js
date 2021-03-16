@@ -301,7 +301,8 @@ SL.Calendar = (function() {
       $('#p-info').html(
         $('#hourinfos').append(
           '<li>&nbsp;</li>\n'+
-          '<li>Local Sidereal Time'+moment.unix(ts).startOf('day').add(mom.gst, 'h').format('HH:MM:SS')+'</li>'+
+          '<li>Sidereal Time:<br />'+moment.unix(ts).startOf('day').add(mom.gst, 'h').format('HH:MM:SS')+'</li>'+
+          '<li>&nbsp;</li>\n'+
           '<li>Lunar Day: '+(mom.lunar.day)+'</li>\n'+
           '<li>'+SL.Astro.Nomy.moon.phase.symbol[SL.Astro.Nomy.moonPhase(mom.lunar)]+' '+SL.Astro.Nomy.moon.phase.name[SL.Astro.Nomy.moonPhase(mom.lunar)]+'</li>\n'+
           '<li>Phase: '+Math.round(mom.lunar.phase * 100)+'%</li>\n'+
