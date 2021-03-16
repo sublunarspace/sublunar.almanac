@@ -8,8 +8,9 @@
   var module_siderealpsi = {
   
     definitions: {
-      core: true,
+      core: false,
       name: "Sidereal Time Effect Size",
+      description: "In 1997 Psi researcher James Spottiswoode found a correlation of local sidereal time and psychic abilities. The effect size appeared to peak around 13:30 and was at a low around 18:00 - 19:00. Another enquiry in 2015 could not reproduce the same values, but revealed a peak around 7:00.",
       group: {
         id: "siderealpsi",
         text: "Psi"
